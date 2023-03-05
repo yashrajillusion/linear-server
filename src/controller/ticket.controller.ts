@@ -24,10 +24,26 @@ router.get("/:id", async (req: Request, res: Response) => {
   }
 });
 
-router.post("/", async (req: Request, res: Response, next: NextFunction) => {
+router.post("/", async (req: Request, res: Response) => {
   try {
     const ticket = await TickeModel.create(req.body);
     return res.status(200).send(ticket);
+  } catch (error) {
+    return res.status(200).send({
+      message: error,
+    });
+  }
+});
+
+router.patch("/:id", async (req: Request, res: Response) => {
+  try {
+    const ticket = await TickeModel.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    if (ticket) {
+      return res.status(200).send(ticket);
+    }
+    return res.status(404).send("Ticket not found");
   } catch (error) {
     return res.status(200).send({
       message: error,
