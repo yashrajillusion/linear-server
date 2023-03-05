@@ -9,7 +9,7 @@ router.post("/commit", async (req: Request, res: Response) => {
     let tickeArray = gitHubBranch.split("-");
     let tickeNumber = `${tickeArray[0]}-${tickeArray[1]}`;
 
-    let currentTicket = await TickeModel.find({
+    let currentTicket = await TickeModel.findOne({
       issueId: tickeNumber.toUpperCase(),
     });
     console.log(currentTicket, tickeNumber.toUpperCase());
