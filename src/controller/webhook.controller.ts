@@ -20,7 +20,6 @@ router.post("/pr", async (req: Request, res: Response) => {
 export default router;
 
 let x ={
-    
     action: 'closed',
     number: 3,
     pull_request: {
