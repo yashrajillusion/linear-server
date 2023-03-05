@@ -1,4 +1,5 @@
 import { Router, Request, Response } from "express";
+import TickeModel from "../model/ticket.model";
 
 const router = Router();
 
@@ -8,7 +9,8 @@ router.post("/commit", async (req: Request, res: Response) => {
     let tickeArray = gitHubBranch.split("-");
     let tickeNumber = `${tickeArray[0]}-${tickeArray[1]}`;
 
-    console.log(tickeNumber);
+    let currentTicket = TickeModel.find({ issueId: tickeNumber.toUpperCase });
+    console.log(currentTicket);
     //req.ref
     // refs/heads/yashraj/yr-1-integrate-webhooks
     console.log(req.body.ref);
