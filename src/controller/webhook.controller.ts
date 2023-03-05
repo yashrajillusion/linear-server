@@ -12,24 +12,32 @@ router.post("/commit", async (req: Request, res: Response) => {
     let currentTicket = await TickeModel.findOne({
       issueId: tickeNumber.toUpperCase(),
     });
-    if(currentTicket && currentTicket.status == "TODO"){
-      currentTicket.status = "INPROGRESS"
-      currentTicket = await currentTicket.save()
+    if (currentTicket && currentTicket.status == "TODO") {
+      currentTicket.status = "INPROGRESS";
+      currentTicket = await currentTicket.save();
     }
-    console.log(currentTicket, tickeNumber.toUpperCase());
-    //req.ref
-    // refs/heads/yashraj/yr-1-integrate-webhooks
-    console.log(req.body.ref);
+
     return res.status(200).send(req.body);
   } catch (error) {}
 });
 
 router.post("/pr", async (req: Request, res: Response) => {
   try {
+
+    /* 
+    [YR-1] integrate webhooks
+false
+opened
+[YR-1] integrate webhooks
+false
+closed
+    */
     //req.body.pull_request.title
     // merged
     //req.body.action
-    console.log(req.body.pull_request.title);
+    let ticket = req.body.pull_request.title.split(" ")[0].replace(/\[|\]/g, '');
+    console.log(ticket)
+    // console.log(req.body.pull_request.title);
     console.log(req.body.pull_request.merged);
     console.log(req.body.action);
     return res.status(200).send(req.body);
