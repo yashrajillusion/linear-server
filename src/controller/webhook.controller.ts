@@ -9,8 +9,10 @@ router.post("/commit", async (req: Request, res: Response) => {
     let tickeArray = gitHubBranch.split("-");
     let tickeNumber = `${tickeArray[0]}-${tickeArray[1]}`;
 
-    let currentTicket = await TickeModel.find({ issueId: tickeNumber.toUpperCase });
-    console.log(currentTicket);
+    let currentTicket = await TickeModel.find({
+      issueId: tickeNumber.toUpperCase,
+    });
+    console.log(currentTicket, tickeNumber.toUpperCase);
     //req.ref
     // refs/heads/yashraj/yr-1-integrate-webhooks
     console.log(req.body.ref);
