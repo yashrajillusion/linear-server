@@ -14,6 +14,7 @@ router.post("/pr", async (req: Request, res: Response) => {
   try {
     //req.body.pull_request.title
     // merged
+    //req.body.action
     console.log(req.body);
     return res.status(200).send(req.body);
   } catch (error) {}
