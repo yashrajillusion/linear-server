@@ -17,7 +17,7 @@ router.post("/commit", async (req: Request, res: Response) => {
       currentTicket = await currentTicket.save();
     }
 
-    return res.status(200).send(req.body);
+    return res.status(200).send({});
   } catch (error) {}
 });
 
@@ -35,12 +35,19 @@ closed
     //req.body.pull_request.title
     // merged
     //req.body.action
-    let ticket = req.body.pull_request.title.split(" ")[0].replace(/\[|\]/g, '');
+    let ticket = req.body.pull_request.title.trim().split(" ")[0].replace(/\[|\]/g, '');
+    let currentTicket = await TickeModel.findOne({
+      issueId: ticket
+    });
+    if (currentTicket && req.body.action == "opened") {
+      currentTicket.status = "IN_DEV_REVIEW";
+      currentTicket = await currentTicket.save();
+    }
     console.log(ticket)
     // console.log(req.body.pull_request.title);
     console.log(req.body.pull_request.merged);
     console.log(req.body.action);
-    return res.status(200).send(req.body);
+    return res.status(200).send({});
   } catch (error) {}
 });
 //yashraj/lead-4708-map-gocomet-migration
