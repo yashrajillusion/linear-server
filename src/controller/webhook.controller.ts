@@ -4,10 +4,12 @@ const router = Router();
 
 router.post("/commit", async (req: Request, res: Response) => {
   try {
+    let gitHubBranch = req.body.ref;
+    let tickeNumber = gitHubBranch.split("/")[3];
+    console.log(tickeNumber);
     //req.ref
-    
+    // refs/heads/yashraj/yr-1-integrate-webhooks
     console.log(req.body.ref);
-    console.log(req.body);
     return res.status(200).send(req.body);
   } catch (error) {}
 });
