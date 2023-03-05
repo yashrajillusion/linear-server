@@ -12,6 +12,10 @@ router.post("/commit", async (req: Request, res: Response) => {
     let currentTicket = await TickeModel.findOne({
       issueId: tickeNumber.toUpperCase(),
     });
+    if(currentTicket && currentTicket.status == "TODO"){
+      currentTicket.status = "INPROGRESS"
+      currentTicket = await currentTicket.save()
+    }
     console.log(currentTicket, tickeNumber.toUpperCase());
     //req.ref
     // refs/heads/yashraj/yr-1-integrate-webhooks
