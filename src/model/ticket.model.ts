@@ -6,6 +6,7 @@ const ticketSchema = new Schema(
     description: { type: String, required: true },
     status: { type: String, required: true },
     priority: { type: String, required: true },
+    issueId: { type: String, required: true, unique: true },
   },
   {
     timestaps: true,

@@ -39,9 +39,6 @@ router.post("/pr", async (req: Request, res: Response) => {
     } else if (req.body.action == "closed") {
       //Need to update link section in ticket detials
     }
-    console.log(ticket);
-    console.log(currentTicket);
-    console.log(req.body.pull_request.merged);
     return res.status(200).send({});
   } catch (error) {}
 });

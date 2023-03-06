@@ -4,7 +4,7 @@ const router = Router();
 
 router.get("/", async (req: Request, res: Response) => {
   try {
-    const tickets = await TickeModel.find();
+    const tickets = await TickeModel.find().sort({ updatedAt: -1 });
     return res.status(200).send(tickets);
   } catch (error) {
     return res.status(200).send({
