@@ -5,6 +5,7 @@ import connection from "./config/db";
 import { Server } from "socket.io";
 import ticketController from "./controller/ticket.controller";
 import webhookController from "./controller/webhook.controller";
+// const socket = require("socket.io");
 
 const app = express();
 app.use(cors());
@@ -28,6 +29,7 @@ const io = new Server(server, {
   pingTimeout: 6000,
   cors: {
     origin: "https://superb-cajeta-471891.netlify.app",
+    credentials: true,
   },
 });
 
