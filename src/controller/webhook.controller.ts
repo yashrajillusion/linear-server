@@ -36,19 +36,21 @@ router.post("/pr", async (req: Request, res: Response) => {
       issueId: ticket,
     });
     if (currentTicket && req.body.action == "opened") {
+      const prevStatus = currentTicket.status;
       currentTicket.status = "IN_DEV_REVIEW";
       currentTicket = await currentTicket.save();
 
       io.in("illusion-frontend").emit("recieved-update-ticket", {
-        prevStatus: "IN_DEV_REVIEW",
+        prevStatus: prevStatus,
         receiveData: currentTicket,
       });
     } else if (currentTicket && req.body.pull_request.merged) {
+      const prevStatus = currentTicket.status;
       currentTicket.status = "DONE";
       currentTicket = await currentTicket.save();
 
       io.in("illusion-frontend").emit("recieved-update-ticket", {
-        prevStatus: "DONE",
+        prevStatus: prevStatus,
         receiveData: currentTicket,
       });
     } else if (req.body.action == "closed") {
