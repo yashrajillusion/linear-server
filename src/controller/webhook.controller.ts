@@ -17,8 +17,6 @@ router.post("/commit", async (req: Request, res: Response) => {
       currentTicket.status = "INPROGRESS";
       currentTicket = await currentTicket.save();
 
-      console.log(currentTicket)
-
       socketController.emit("update-ticket", {
         prevStatus: "TODO",
         receiveData: currentTicket,

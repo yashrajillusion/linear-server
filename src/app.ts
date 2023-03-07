@@ -34,8 +34,6 @@ const io = new Server(server, {
   },
 });
 
-
-
 io.on("connection", (socket) => {
   socket.on("current-team", (currentTeamId) => {
     currentTeamId = currentTeamId;
@@ -45,7 +43,6 @@ io.on("connection", (socket) => {
     socket.in("illusion-frontend").emit("recieved-ticket", receiveData);
   });
   socket.on("update-ticket", (receiveData) => {
-    console.log(receiveData);
     socket.in("illusion-frontend").emit("recieved-update-ticket", receiveData);
   });
 });
