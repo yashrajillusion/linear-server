@@ -52,7 +52,7 @@ router.post("/pr", async (req: Request, res: Response) => {
         receiveData: currentTicket,
       });
     } else if (req.body.action == "closed") {
-      //Need to update link section in ticket detials
+      //Need to update link section in ticket detial
     }
     return res.status(200).send({});
   } catch (error) {}
