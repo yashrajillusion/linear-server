@@ -34,10 +34,9 @@ const io = new Server(server, {
   },
 });
 
-var socketController: any;
+
 
 io.on("connection", (socket) => {
-  socketController = socket;
   socket.on("current-team", (currentTeamId) => {
     currentTeamId = currentTeamId;
     socket.join(currentTeamId);
@@ -51,4 +50,4 @@ io.on("connection", (socket) => {
   });
 });
 
-export default socketController;
+export default io;
