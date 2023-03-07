@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
 import TickeModel from "../model/ticket.model";
-import socketController from "../app";
+import io from "../app";
 
 const router = Router();
 
@@ -17,7 +17,7 @@ router.post("/commit", async (req: Request, res: Response) => {
       currentTicket.status = "INPROGRESS";
       currentTicket = await currentTicket.save();
 
-      socketController.emit("update-ticket", {
+      io.in("illusion-frontend").emit("recieved-update-ticket", {
         prevStatus: "TODO",
         receiveData: currentTicket,
       });
@@ -39,7 +39,7 @@ router.post("/pr", async (req: Request, res: Response) => {
       currentTicket.status = "IN_DEV_REVIEW";
       currentTicket = await currentTicket.save();
 
-      socketController.emit("update-ticket", {
+      io.in("illusion-frontend").emit("recieved-update-ticket", {
         prevStatus: "IN_DEV_REVIEW",
         receiveData: currentTicket,
       });
@@ -47,12 +47,12 @@ router.post("/pr", async (req: Request, res: Response) => {
       currentTicket.status = "DONE";
       currentTicket = await currentTicket.save();
 
-      socketController.emit("update-ticket", {
+      io.in("illusion-frontend").emit("recieved-update-ticket", {
         prevStatus: "DONE",
         receiveData: currentTicket,
       });
     } else if (req.body.action == "closed") {
-      //Need to update link section in ticket detials
+      //Need to update link section in ticket detial
     }
     return res.status(200).send({});
   } catch (error) {}
