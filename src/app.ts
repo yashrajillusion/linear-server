@@ -45,3 +45,5 @@ io.on("connection", (socket) => {
     socket.in("illusion-frontend").emit("recieved-update-ticket", receiveData);
   });
 });
+
+export default io;

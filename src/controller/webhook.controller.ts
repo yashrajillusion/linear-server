@@ -1,5 +1,6 @@
 import { Router, Request, Response } from "express";
 import TickeModel from "../model/ticket.model";
+import socketController from "../app";
 
 const router = Router();
 
@@ -15,8 +16,12 @@ router.post("/commit", async (req: Request, res: Response) => {
     if (currentTicket && currentTicket.status == "TODO") {
       currentTicket.status = "INPROGRESS";
       currentTicket = await currentTicket.save();
-    }
 
+      socketController.emit("update-ticket", {
+        prevStatus: "TODO",
+        receiveData: currentTicket,
+      });
+    }
     return res.status(200).send({});
   } catch (error) {}
 });
@@ -33,9 +38,19 @@ router.post("/pr", async (req: Request, res: Response) => {
     if (currentTicket && req.body.action == "opened") {
       currentTicket.status = "IN_DEV_REVIEW";
       currentTicket = await currentTicket.save();
+
+      socketController.emit("update-ticket", {
+        prevStatus: "IN_DEV_REVIEW",
+        receiveData: currentTicket,
+      });
     } else if (currentTicket && req.body.pull_request.merged) {
       currentTicket.status = "DONE";
       currentTicket = await currentTicket.save();
+
+      socketController.emit("update-ticket", {
+        prevStatus: "DONE",
+        receiveData: currentTicket,
+      });
     } else if (req.body.action == "closed") {
       //Need to update link section in ticket detials
     }
