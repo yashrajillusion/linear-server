@@ -28,8 +28,7 @@ let server = app.listen(PORT, async (): Promise<void> => {
 const io = new Server(server, {
   pingTimeout: 6000,
   cors: {
-    // origin: "https://superb-cajeta-471891.netlify.app",
-    origin: "http://localhost:3001",
+    origin: "https://superb-cajeta-471891.netlify.app",
     credentials: true,
   },
 });
