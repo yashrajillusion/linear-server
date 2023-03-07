@@ -5,7 +5,6 @@ import connection from "./config/db";
 import { Server } from "socket.io";
 import ticketController from "./controller/ticket.controller";
 import webhookController from "./controller/webhook.controller";
-// const socket = require("socket.io");
 
 const app = express();
 app.use(cors());
@@ -35,7 +34,6 @@ const io = new Server(server, {
 
 io.on("connection", (socket) => {
   socket.on("current-team", (currentTeamId) => {
-    currentTeamId = currentTeamId;
     socket.join(currentTeamId);
   });
   socket.on("create-ticket", (receiveData) => {
