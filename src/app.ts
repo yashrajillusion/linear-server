@@ -28,12 +28,16 @@ let server = app.listen(PORT, async (): Promise<void> => {
 const io = new Server(server, {
   pingTimeout: 6000,
   cors: {
-    origin: "https://superb-cajeta-471891.netlify.app",
+    // origin: "https://superb-cajeta-471891.netlify.app",
+    origin: "http://localhost:3001",
     credentials: true,
   },
 });
 
+var socketController: any;
+
 io.on("connection", (socket) => {
+  socketController = socket;
   socket.on("current-team", (currentTeamId) => {
     currentTeamId = currentTeamId;
     socket.join(currentTeamId);
@@ -42,6 +46,9 @@ io.on("connection", (socket) => {
     socket.in("illusion-frontend").emit("recieved-ticket", receiveData);
   });
   socket.on("update-ticket", (receiveData) => {
+    console.log(receiveData);
     socket.in("illusion-frontend").emit("recieved-update-ticket", receiveData);
   });
 });
+
+export default socketController;
